@@ -3,6 +3,7 @@ import {ChevronDownIcon} from '@heroicons/react/24/outline'
 
 function Accordion() {
 
+    const [open, setOpen] = useState(null);
     const data = [
         {
             id: 1,
@@ -29,7 +30,7 @@ function Accordion() {
     return (
         <div className="accordion">
             {
-                data.map(item => <AccordionItem key={item.id} item={item}/>)
+                data.map(item => <AccordionItem key={item.id} item={item} setOpen={setOpen} open = {open}/>)
             }
         </div>
     )
@@ -37,11 +38,12 @@ function Accordion() {
 
 export default Accordion;
 
-function AccordionItem({item}) {
-    const [isOpen, setIsOpen] = useState(false);
+function AccordionItem({item, setOpen, open}) {
+
+    const isOpen = item.id === open;
     return (
         <div className={`accordion-item ${isOpen ? 'accordion__expanded' : ''}`} key={item.id}>
-            <div className="accordion-item__header" onClick={() => setIsOpen(!isOpen)}>
+            <div className="accordion-item__header" onClick={() => setOpen(item.id)}>
                 <div>{item.title}</div>
                 <ChevronDownIcon style={
                     {
